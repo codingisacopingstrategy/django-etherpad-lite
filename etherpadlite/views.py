@@ -223,8 +223,9 @@ def pad(request, pk):
 
     # Delete the existing session first
     if ('padSessionID' in request.COOKIES):
-        epclient.deleteSession(request.COOKIES['sessionID'])
-        response.delete_cookie('sessionID', server.hostname)
+        if 'sessionID' in request.COOKIES.keys():
+            epclient.deleteSession(request.COOKIES['sessionID'])
+            response.delete_cookie('sessionID', server.hostname)
         response.delete_cookie('padSessionID')
 
     # Set the new session cookie for both the server and the local site
